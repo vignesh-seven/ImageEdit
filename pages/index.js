@@ -15,7 +15,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        
         <canvas className={`${styles.board} ${styles.boardDebug}`} width={960} height={540}></canvas>
       </main>
     </>
