@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Index.module.css'
 
+import MyCanvas from '../components/MyCanvas'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -15,7 +17,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <canvas className={`${styles.board} ${styles.boardDebug}`} width={960} height={540}></canvas>
+        {/* <canvas className={`${styles.board} ${styles.boardDebug}`} width={960} height={540}></canvas> */}
+        <MyCanvas />
       </main>
     </>
   )
