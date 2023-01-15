@@ -2,12 +2,32 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Index.module.css'
+import { useState } from 'react';
 
 import MyCanvas from '../components/MyCanvas'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const [ isHoldingSpace, setIsHoldingSpace ] = useState(false)
+
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleSpaceKeyDown = (e) => {
+    if(e.key == " ") {
+      setIsDragging(true)
+      console.debug(isDragging)
+    }
+  }
+  
+  const handleSpaceKeyUp = (e) => {
+    if(e.key == " ") {
+      setIsDragging(false)
+      console.debug(isDragging)
+    }
+  }
+  
   return (
     <>
       <Head>
@@ -16,9 +36,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main 
+      className={styles.main}
+      onKeyDown={handleSpaceKeyDown}
+      onKeyUp={handleSpaceKeyUp}
+      tabIndex="0"
+      >
         {/* <canvas className={`${styles.board} ${styles.boardDebug}`} width={960} height={540}></canvas> */}
-        <MyCanvas />
+        <MyCanvas isDragging={isDragging}/>
       </main>
     </>
   )

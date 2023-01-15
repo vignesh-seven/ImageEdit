@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 
-export default function MyCanvas() {
+export default function MyCanvas(props) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
+  
 
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    console.log("mouse down")
-  };
+  // const handleMouseDown = (e) => {
+  //   setIsDragging(true);
+  //   console.log("mouse down")
+  // };
 
   const handleMouseMove = (e) => {
-    if (!isDragging) {
+    if (!props.isDragging) {
       return;
     }
-    console.log(e)
     let newPosition = {
       x: position.x + e.movementX,
       y: position.y + e.movementY
@@ -21,10 +20,10 @@ export default function MyCanvas() {
     setPosition(newPosition);
   };
 
-  const handleMouseUp = (e) => {
-    console.log("mouse up")
-    setIsDragging(false);
-  };
+  // const handleMouseUp = (e) => {
+  //   console.log("mouse up")
+  //   setIsDragging(false);
+  // };
 
 
   return (
@@ -37,9 +36,9 @@ export default function MyCanvas() {
         left: position.x,
         top: position.y,
       }}
-      onMouseDown={handleMouseDown}
+      // onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
+      // onMouseUp={handleMouseUp}
     >
     </canvas>
   );
