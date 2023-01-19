@@ -2,11 +2,11 @@ import { useState } from 'react';
 import styles from '../styles/MyCanvas.module.css'
 
 export default function MyCanvas(props) {
-  let size = {x: "500px", y: "500px"}
+  let size = {width: "500px", height: "500px"}
 
   const [position, setPosition] = useState({
-     x: 0,
-     y: 0 
+     x: props.windowSize.width/2 - size.width/2,
+     y: props.windowSize.height/2 - size.height/2
     });
   const [isMouseMoving, setIsMouseMoving] = useState(false)
 
@@ -40,8 +40,8 @@ export default function MyCanvas(props) {
         backgroundColor: "red",
         left: position.x,
         top: position.y,
-        width: size.x,
-        height: size.y,
+        width: size.width,
+        height: size.height,
       }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}

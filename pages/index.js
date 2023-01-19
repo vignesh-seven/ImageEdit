@@ -84,7 +84,7 @@ function useWindowSize() {
       tabIndex="0"
       >
         {/* <canvas className={`${styles.board} ${styles.boardDebug}`} width={960} height={540}></canvas> */}
-        <MyCanvas className={styles.board} isDragging={isDragging}/>
+        <MyCanvas windowSize={windowSize} className={styles.board} isDragging={isDragging}/>
       </main>
         <ButtonPanel />
     </>
