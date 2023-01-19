@@ -1,0 +1,12 @@
+.ButtonPanel {
+  outline: 3px solid green;
+
+  position: absolute;
+  float: left;
+}
+
+.ButtonPanel button {
+  width: 3em;
+  height: 3em;
+  
+}

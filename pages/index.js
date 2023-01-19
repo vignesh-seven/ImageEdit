@@ -5,6 +5,7 @@ import styles from '../styles/Index.module.css'
 import { useState } from 'react';
 
 import MyCanvas from '../components/MyCanvas'
+import ButtonPanel from '../components/ButtonPanel';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -43,8 +44,9 @@ export default function Home() {
       tabIndex="0"
       >
         {/* <canvas className={`${styles.board} ${styles.boardDebug}`} width={960} height={540}></canvas> */}
-        <MyCanvas isDragging={isDragging}/>
+        <MyCanvas className={styles.board} isDragging={isDragging}/>
       </main>
+        <ButtonPanel />
     </>
   )
 }

@@ -8,11 +8,10 @@
 
 .board {
   align-self: center;
-  position: relative;
+  /* justify-self: center; */
   /* top: 10px;
   left: 10px; */
 }
-
 
 
 /* DEBUG CLASSES */
