@@ -4,9 +4,9 @@ import styles from '../styles/ButtonPanel.module.css'
 export default function ButtonPanel() {
   return (
     <div className={styles.ButtonPanel}>
-      <button>A</button>
-      <button>B</button>
-      <button>C</button>
+      <button>Open</button>
+      <button>Save</button>
+      <button>Close</button>
     </div>
   )
 }
