@@ -1,18 +1,12 @@
 .main {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   /* align-items: center; */
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
+  padding: 0;
+  margin: 0;
 }
-
-.board {
-  align-self: center;
-  /* justify-self: center; */
-  /* top: 10px;
-  left: 10px; */
-}
-
 
 /* DEBUG CLASSES */
 

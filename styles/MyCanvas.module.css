@@ -1,3 +1,4 @@
 .MyCanvas {
-  
+  position: fixed;
+  outline: 2px solid blue
 }

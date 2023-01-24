@@ -1,8 +1,8 @@
 .ButtonPanel {
   outline: 3px solid green;
 
-  position: absolute;
-  float: left;
+  position: fixed;
+  left: 0;
 }
 
 .ButtonPanel button {
