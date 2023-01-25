@@ -2,11 +2,6 @@
   outline: 3px solid green;
 
   position: fixed;
-  left: 0;
-}
-
-.ButtonPanel button {
-  width: 3em;
-  height: 3em;
-  
+  left: 10em;
+  top: 0
 }
