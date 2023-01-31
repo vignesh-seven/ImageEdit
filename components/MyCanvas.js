@@ -1,20 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from '../styles/MyCanvas.module.css'
+import { fabric } from "fabric";
+
+
+
 
 export default function MyCanvas(props) {
+
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+
+    // Render image or perform manipulation here
+    
+  }, []);
+
   let size = {width: "500px", height: "500px"}
 
   const [position, setPosition] = useState({
      x: 0,
      y: 0
     });
-  // const [isMouseMoving, setIsMouseMoving] = useState(false)
-
-
-  // const handleMouseDown = (e) => {
-  //   setIsMouseMoving(true);
-  //   console.log("mouse down")
-  // };
 
   const handleMouseMove = (e) => {
     if (!props.isHoldingSpace) {
@@ -27,26 +35,16 @@ export default function MyCanvas(props) {
     setPosition(newPosition);
   };
 
-  // const handleMouseUp = (e) => {
-  //   console.log("mouse up")
-  //   setIsMouseMoving(false);
-  // };
-
-
   return (
-    <canvas className={styles.MyCanvas}
+    <canvas className={styles.MyCanvas} ref={canvasRef}
       style={{
         left: position.x,
         top: position.y,
         width: size.width,
         height: size.height,
       }}
-      // onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
-      // onMouseUp={handleMouseUp}
     >
     </canvas>
   );
 }
-
-// export default DraggableDiv;
