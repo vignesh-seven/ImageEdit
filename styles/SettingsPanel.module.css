@@ -1,4 +1,32 @@
-.Text {
-  font-size: larger;
-  color: red;
+
+.SettingsPanel {
+  position: absolute;
+
+  right: 0;
+  top: 0;
+  width: 25%;
+  height: 100%;
+  background-color: brown;
+}
+
+.Settings {
+  background-color: blue;
+  height: max-content;
+}
+
+.BottomButtons {
+  margin-bottom: 0%;
+  background-color: green;
+  height: auto;
+}
+
+.button {
+  width: fit-content;
+  margin: 1em;
+
+  float: inline-start;
+}
+
+.right {
+  float: inline-end;
 }
