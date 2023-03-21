@@ -1,7 +1,9 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Index.module.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
+
+import SettingsPanel from '../components/SettingsPanel.js'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,6 +18,7 @@ export default function Home() {
       </Head>
       <main>
         <h1>Hello</h1>
+        <SettingsPanel />
       </main>
     </>
   )
