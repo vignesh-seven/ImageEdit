@@ -4,6 +4,7 @@ import styles from '../styles/Index.module.css'
 import { useState, useEffect } from 'react'
 
 import SettingsPanel from '../components/SettingsPanel'
+import ImageArea from '../components/ImageArea'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,8 +18,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h1>Hello</h1>
-        <SettingsPanel />
+        <ImageArea className={styles.imageArea}/>
+        <SettingsPanel className={styles.settingsPanel}/>
       </main>
     </>
   )
