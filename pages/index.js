@@ -1,14 +1,22 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Index.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 
 import SettingsPanel from '../components/SettingsPanel'
 import ImageArea from '../components/ImageArea'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function App() {
+
+  const [ config, setConfig ] = useState({
+    brightness: 0,
+    contrast: 0
+  })
+
+
+  // console.log("update")
   return (
     <>
       <Head>
@@ -19,7 +27,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <ImageArea className={styles.imageArea}/>
-        <SettingsPanel className={styles.settingsPanel}/>
+        <SettingsPanel config={config} className={styles.settingsPanel}/>
       </main>
     </>
   )

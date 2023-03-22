@@ -3,13 +3,13 @@ import styles from '../styles/SettingsPanel.module.css'
 
 import SliderContainer from './SliderContainer'
 
-export default function SettingsPanel() {
+export default function SettingsPanel(props) {
   return (
 
   <div className={styles.SettingsPanel}>
     <div className={styles.Settings}>
-      <SliderContainer name="Brightness"/>
-      <SliderContainer name="Contrast"/>
+      <SliderContainer value={props.config.brightness} name="brightness" label="Brightness"/>
+      {/* <SliderContainer value={props.config.contrast} name="contrast" label="Contrast"/> */}
       
     </div>
 

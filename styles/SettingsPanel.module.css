@@ -29,6 +29,17 @@
   height: auto;
 }
 
+.Slider {
+  display: grid; 
+  grid-auto-columns: 1fr; 
+  grid-template-columns: 1fr 2em 2em; 
+  grid-template-rows: 1fr; 
+  gap: 0.2em 0.2em; 
+  grid-template-areas: 
+    ". . ."; 
+  align-items: center; 
+}
+
 .button {
   width: fit-content;
   margin: 1em;
