@@ -3,7 +3,7 @@ import { Slider, Text, Button } from '@mantine/core'
 import styles from '../styles/SettingsPanel.module.css'
 
 
-export default function SliderContainer(props) {
+export default function SliderContainer(props: any) {
 
   // function handleChange(event) {
   //   props.changeConfig(props.name, event)

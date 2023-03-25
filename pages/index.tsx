@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
-import styles from '../styles/Index.module.css'
+import styles from '../styles/Index.module.css' //this is so annoying to me idk
 import { useState, useEffect, use } from 'react'
 
 import SettingsPanel from '../components/SettingsPanel'
@@ -18,20 +18,18 @@ export default function App() {
   })
 
   useEffect(() => {
-    console.log(config); // log the updated state value after it has been set
+    console.log(config); // log the updated state value after it has been set.... wait talking to grandma  oh ok lol
   }, [config]);
 
 
-  function changeConfig(name, newValue) {
+  function changeConfig(name: String, newValue: number) {
     // WE ARE GETTING THE VALUE HERE, BUT IT'S NOT UPDATING IN STATE
     setConfig(prevConfig => {
       return {
         ...prevConfig,
-        [name]: newValue
+        name: newValue
       };
     });
-    
-    
   }
 
 
@@ -46,7 +44,7 @@ export default function App() {
       </Head>
       <main className={styles.main}>
       {/* <Button name="hello" onClick={changeConfig}>Increment Brightness</Button> */}
-        <ImageArea className={styles.imageArea} />
+        <ImageArea className={styles.settingsPanel} />
         <SettingsPanel config={config} changeConfig={changeConfig} className={styles.settingsPanel} />
       </main>
     </>
