@@ -1,39 +1,55 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
-import styles from '../styles/Index.module.css' //this is so annoying to me idk
-import { useState, useEffect, use } from 'react'
+import styles from '../styles/Index.module.css'
+import { useState, useEffect } from 'react'
 
 import SettingsPanel from '../components/SettingsPanel'
 import ImageArea from '../components/ImageArea'
-import { Button } from '@mantine/core'
-import { setRevalidateHeaders } from 'next/dist/server/send-payload'
+import { Button, createStyles } from '@mantine/core'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const useStyle = createStyles(() => ({
+  "main": {
+    padding: "0",
+    margin: "0",
+  
+    width: "100%",
+    
+    display: "grid",
+    gridTemplateColumns: "1fr 25%",
+    gridTemplateRows: "1fr",
+    gap: "0px 0px",
+    gridAutoFlow: "row",
+    gridTemplateAreas:
+      ". .",
+    height: "100vh",   
+  
+  }
+}))
+
+
 export default function App() {
+
+  const { classes } = useStyle();
 
   const [config, setConfig] = useState({
     brightness: 0,
     contrast: 0
   })
 
-  useEffect(() => {
-    console.log(config); // log the updated state value after it has been set.... wait talking to grandma  oh ok lol
-  }, [config]);
+  console.log(config);
 
-
-  function changeConfig(name: String, newValue: number) {
-    // WE ARE GETTING THE VALUE HERE, BUT IT'S NOT UPDATING IN STATE
+  function changeConfig(name: string, newValue: number) {
     setConfig(prevConfig => {
       return {
         ...prevConfig,
-        name: newValue
+        [name]: newValue
       };
     });
   }
 
 
-  // console.log("update")
   return (
     <>
       <Head>
@@ -42,10 +58,10 @@ export default function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main className={classes.main}>
       {/* <Button name="hello" onClick={changeConfig}>Increment Brightness</Button> */}
-        <ImageArea className={styles.settingsPanel} />
-        <SettingsPanel config={config} changeConfig={changeConfig} className={styles.settingsPanel} />
+        <ImageArea  />
+        <SettingsPanel config={config} changeConfig={changeConfig} />
       </main>
     </>
   )
