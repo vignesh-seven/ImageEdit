@@ -5,15 +5,34 @@ import { useState, useEffect, use } from 'react'
 
 import SettingsPanel from '../components/SettingsPanel'
 import ImageArea from '../components/ImageArea'
+import { Button } from '@mantine/core'
+import { setRevalidateHeaders } from 'next/dist/server/send-payload'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function App() {
 
-  const [ config, setConfig ] = useState({
+  const [config, setConfig] = useState({
     brightness: 0,
     contrast: 0
   })
+
+  useEffect(() => {
+    console.log(config); // log the updated state value after it has been set
+  }, [config]);
+
+
+  function changeConfig(name, newValue) {
+    // WE ARE GETTING THE VALUE HERE, BUT IT'S NOT UPDATING IN STATE
+    setConfig(prevConfig => {
+      return {
+        ...prevConfig,
+        [name]: newValue
+      };
+    });
+    
+    
+  }
 
 
   // console.log("update")
@@ -26,8 +45,9 @@ export default function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <ImageArea className={styles.imageArea}/>
-        <SettingsPanel config={config} className={styles.settingsPanel}/>
+      {/* <Button name="hello" onClick={changeConfig}>Increment Brightness</Button> */}
+        <ImageArea className={styles.imageArea} />
+        <SettingsPanel config={config} changeConfig={changeConfig} className={styles.settingsPanel} />
       </main>
     </>
   )

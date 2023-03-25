@@ -5,7 +5,11 @@ import styles from '../styles/SettingsPanel.module.css'
 
 export default function SliderContainer(props) {
 
-
+  // function handleChange(event) {
+  //   props.changeConfig(props.name, event)
+  //   console.log(event)
+  //   // console.log(event)   //// THE NEW VALUE IS BEING PASSES TO THE PARENT BUT ITS NOT UPDATING THE STATE
+  // }
   return (
     <div className={styles.SliderContainer}>
       <Text fz="md" className={styles.flexChild}>{props.label}</Text>
@@ -13,16 +17,27 @@ export default function SliderContainer(props) {
       <div className={styles.Slider}>
 
         <Slider 
-          
-          defaultValue={props.value}
           min={-50}
           max={50}
           label={(value) => value.toFixed(1)}
           styles={{ markLabel: { display: 'none' } }}
           className={styles.flexChild}
+          onChange={(newValue) => {
+            props.changeConfig(props.name, newValue)
+          }}
+          name={props.name}
+          value={props.value}
         />
-        <Button compact >+</Button>
-        <Button compact >-</Button>
+        <Button compact 
+          onClick={() => {
+            props.changeConfig(props.name, props.value + 1)
+          }}
+          >+</Button>
+        <Button compact 
+          onClick={() => {
+            props.changeConfig(props.name, props.value - 1)
+          }}
+        >-</Button>
       </div>
     </div>
   )

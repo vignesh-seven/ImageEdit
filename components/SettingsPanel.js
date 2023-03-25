@@ -8,8 +8,8 @@ export default function SettingsPanel(props) {
 
   <div className={styles.SettingsPanel}>
     <div className={styles.Settings}>
-      <SliderContainer value={props.config.brightness} name="brightness" label="Brightness"/>
-      {/* <SliderContainer value={props.config.contrast} name="contrast" label="Contrast"/> */}
+      <SliderContainer value={props.config.brightness} changeConfig={props.changeConfig} name="brightness" label="Brightness"/>
+      <SliderContainer value={props.config.contrast} changeConfig={props.changeConfig} name="contrast" label="Contrast"/> 
       
     </div>
 
