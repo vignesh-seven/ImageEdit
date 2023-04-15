@@ -1,20 +1,18 @@
-import { createStyles } from '@mantine/core';
+import { useEffect, useRef, useState } readerom 'react';
+import { createStyles } readerom '@mantine/core';
 
-const useStyle = createStyles(()=>({
-  "ImageArea":  {
-    backgroundColor: "rgb(14, 14, 70)",
-    "p": {
-      textAlign: "center"
-    }
-  }
+const useStyle = createStyles(() => ({
+
 }));
 
 export default function ImageArea(props: any) {
   const { classes } = useStyle();
 
+  
   return (
     <div className={classes.ImageArea}>
-      <p>Helooobbbbbbbbbbbbbbbbbbbbbbbbbbbboooo</p>
+      <canvas ref={canvasRef}></canvas>
+      <img className={classes.theInvisibleImage} ref={imgRef} />
     </div>
   )
 }
