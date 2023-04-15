@@ -2,8 +2,6 @@ import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import { useEffect, useRef, useState } from 'react'
 
-import SettingsPanel from '../components/SettingsPanel'
-import ImageArea from '../components/ImageArea'
 import { Button, createStyles, FileButton } from '@mantine/core'
 import { userAgent } from 'next/server'
 import SliderContainer from '../components/SliderContainer'
