@@ -63,18 +63,21 @@ const useStyle = createStyles(() => ({
     height: "3em",
   },
   "Slider": {
-    display: "grid", 
-    gridAutoColumns: "1fr", 
-    gridTemplateColumns: "1fr 2em 2em", 
-    gridTemplateRows: "1fr", 
-    gap: "0.2em 0.2em", 
-    gridTemplateAreas: 
-      ". . .", 
-    alignItems: "center", 
+    display: "grid",
+    gridAutoColumns: "1fr",
+    gridTemplateColumns: "1fr 2em 2em",
+    gridTemplateRows: "1fr",
+    gap: "0.2em 0.2em",
+    gridTemplateAreas:
+      ". . .",
+    alignItems: "center",
   },
   "flexChild": {
     flex: "1"
   },
+  "hidden": {
+    display: "none"
+  }
 
 }))
 
@@ -83,7 +86,7 @@ export default function App() {
 
   const { classes } = useStyle();
 
-  const [inputImage, setInputImage] = useState<File | null>(null)
+  const [imageData, setImageData] = useState("")
 
   const [config, setConfig] = useState({
     brightness: 0,
@@ -100,14 +103,15 @@ export default function App() {
     setContext(ctx);
   }, []);
 
-  const draw = (ctx: any) => {
-    ctx.fillStyle = "green";
-    ctx.fillRect(10, 10, 150, 100);
+  const draw = (ctx: any, imageData: string) => {
+    // ctx.fillStyle = "green";
+    // ctx.fillRect(10, 10, 150, 100);
+    ctx.drawImage(imgRef.current, 200, 200)
   };
 
   useEffect(() => {
     if (context) {
-      draw(context)
+      draw(context, imageData)
     }
   }, [context]);
 
@@ -124,11 +128,21 @@ export default function App() {
     });
   }
 
-  function handleInputImage(e: any) {
-    const selectedImage = e.target.files[0];
-    const imageUrl = URL.createObjectURL(selectedImage);
-    setInputImage(imageUrl);
-  }
+  const handleImageChange = (event: any) => {
+    if (event && imgRef) {
+      const fileReader = new FileReader();
+
+      fileReader.onload = (e) => {
+        const { result } = e.target;
+        console.log(result)
+        imgRef.current.src = result
+        // let newImageData = result
+        setImageData(result)
+      }
+
+      fileReader.readAsDataURL(event);
+    }
+  };
 
   return (
     <>
@@ -143,11 +157,12 @@ export default function App() {
 
         {/* {CANVAS AREA} */}
         <div className={classes.ImageArea}>
-          <canvas ref={canvasRef}></canvas>
+          <canvas ref={canvasRef} width={500} height={500}></canvas>
+          <img ref={imgRef} className={classes.hidden}/>
         </div>
 
 
-        {/* <SettingsPanel config={config} changeConfig={changeConfig} handleInputImage={(e: File) => { handleInputImage(e) }} /> */}
+        {/* <SettingsPanel config={config} changeConfig={changeConfig} handleimageFile={(e: File) => { handleimageFile(e) }} /> */}
         <div className={classes.SettingsPanel}>
           <div className={classes.Settings}>
             <SliderContainer value={config.brightness} changeConfig={changeConfig} name="brightness" label="Brightness" />
@@ -158,7 +173,7 @@ export default function App() {
             <Button className={classes.button} onChange={() => console.log("change")}>
               Open
             </Button>
-            <FileButton onChange={(e) => { handleInputImage(e) }} accept="image/png,image/jpeg">
+            <FileButton onChange={handleImageChange} accept="image/png,image/jpeg">
               {(props) => <Button {...props}>Upload image</Button>}
             </FileButton>
             <Button className={`${classes.button} ${classes.right}`}>
