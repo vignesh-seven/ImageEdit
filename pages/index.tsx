@@ -163,13 +163,17 @@ export default function App() {
           // canvas.width = img.width;
           // canvas.height = img.height;
 
+          // Applying filters
+          ctx.filter = `brightness(${config.brightness+100}%)`;
+
           ctx.drawImage(img, 0, 0);
+          console.log(img)
         };
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
-  }, [file]);
+  }, [file, config]);
 
 
   return (

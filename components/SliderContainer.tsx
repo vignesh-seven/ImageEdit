@@ -33,8 +33,8 @@ export default function SliderContainer(props: any) {
       <div className={classes.Slider}>
 
         <Slider 
-          min={-50}
-          max={50}
+          min={-100}
+          max={100}
           label={(value) => value.toFixed(1)}
           styles={{ markLabel: { display: 'none' } }}
           className={classes.flexChild}
