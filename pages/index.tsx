@@ -164,7 +164,8 @@ export default function App() {
           // canvas.height = img.height;
 
           // Applying filters
-          ctx.filter = `brightness(${config.brightness+100}%)`;
+          ctx.filter = `brightness(${(config.brightness+100)}%) contrast(${(config.contrast+100) / 100})`
+          // ctx.filter = ``
 
           ctx.drawImage(img, 0, 0);
           console.log(img)
@@ -202,10 +203,10 @@ export default function App() {
           </div>
 
           <div className={classes.BottomButtons}>
-            <Button className={classes.button} onChange={() => console.log("change")}>
+            {/* <Button className={classes.button} onChange={() => console.log("change")}>
               Open
-            </Button>
-            <FileButton onChange={handleFileSelect} accept="image/png,image/jpeg">
+            </Button> */}
+            <FileButton className={classes.button} onChange={handleFileSelect} accept="image/png,image/jpeg">
               {(props) => <Button {...props}>Upload image</Button>}
             </FileButton>
             <Button className={`${classes.button} ${classes.right}`}>
