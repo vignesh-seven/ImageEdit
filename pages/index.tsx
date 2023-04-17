@@ -97,23 +97,23 @@ export default function App() {
   const imgRef = useRef(null);
   const [context, setContext] = useState(null);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    setContext(ctx);
-  }, []);
+  // useEffect(() => {
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext('2d');
+  //   setContext(ctx);
+  // }, []);
 
-  const draw = (ctx: any, imageData: string) => {
-    // ctx.fillStyle = "green";
-    // ctx.fillRect(10, 10, 150, 100);
-    ctx.drawImage(imgRef.current, 200, 200)
-  };
+  // const draw = (ctx: any) => {
+  //   // ctx.fillStyle = "green";
+  //   // ctx.fillRect(10, 10, 150, 100);
+  //   ctx.drawImage(imgRef.current, 200, 200)
+  // };
 
-  useEffect(() => {
-    if (context) {
-      draw(context, imageData)
-    }
-  }, [context]);
+  // useEffect(() => {
+  //   if (context) {
+  //     draw(context)
+  //   }
+  // }, [context]);
 
 
 
@@ -128,21 +128,42 @@ export default function App() {
     });
   }
 
-  const handleImageChange = (event: any) => {
-    if (event && imgRef) {
-      const fileReader = new FileReader();
+  // const handleImageChange = (event: any) => {
+  //   if (event && imgRef) {
+  //     const fileReader = new FileReader();
 
-      fileReader.onload = (e) => {
-        const { result } = e.target;
-        console.log(result)
-        imgRef.current.src = result
-        // let newImageData = result
-        setImageData(result)
-      }
+  //     fileReader.onload = (e) => {
+  //       const { result } = e.target;
+  //       console.log(result)
+  //       imgRef.current.src = result
+  //       // let newImageData = result
+  //       setImageData(result)
+  //     }
 
-      fileReader.readAsDataURL(event);
-    }
-  };
+  //     fileReader.readAsDataURL(event);
+  //   }
+  // };
+
+  function handleFileSelect(e: any) {
+    const file = e;
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        ctx.drawImage(img, 0, 0);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
 
   return (
     <>
@@ -173,7 +194,7 @@ export default function App() {
             <Button className={classes.button} onChange={() => console.log("change")}>
               Open
             </Button>
-            <FileButton onChange={handleImageChange} accept="image/png,image/jpeg">
+            <FileButton onChange={handleFileSelect} accept="image/png,image/jpeg">
               {(props) => <Button {...props}>Upload image</Button>}
             </FileButton>
             <Button className={`${classes.button} ${classes.right}`}>
