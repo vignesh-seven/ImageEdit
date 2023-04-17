@@ -97,6 +97,12 @@ export default function App() {
   const imgRef = useRef(null);
   const [context, setContext] = useState(null);
 
+  const [file, setFile] = useState(null);
+
+  function handleFileSelect(e: any) {
+    setFile(e);
+  }
+
   // useEffect(() => {
   //   const canvas = canvasRef.current;
   //   const ctx = canvas.getContext('2d');
@@ -144,25 +150,26 @@ export default function App() {
   //   }
   // };
 
-  function handleFileSelect(e: any) {
-    const file = e;
-    const reader = new FileReader();
+  useEffect(() => {
+    if (file) {
+      const reader = new FileReader();
 
-    reader.onload = function(e) {
-      const img = new Image();
-      img.onload = function() {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
+      reader.onload = function (e) {
+        const img = new Image();
+        img.onload = function () {
+          const canvas = canvasRef.current;
+          const ctx = canvas.getContext("2d");
 
-        canvas.width = img.width;
-        canvas.height = img.height;
+          // canvas.width = img.width;
+          // canvas.height = img.height;
 
-        ctx.drawImage(img, 0, 0);
+          ctx.drawImage(img, 0, 0);
+        };
+        img.src = e.target.result;
       };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
+      reader.readAsDataURL(file);
+    }
+  }, [file]);
 
 
   return (
@@ -179,7 +186,7 @@ export default function App() {
         {/* {CANVAS AREA} */}
         <div className={classes.ImageArea}>
           <canvas ref={canvasRef} width={500} height={500}></canvas>
-          <img ref={imgRef} className={classes.hidden}/>
+          <img ref={imgRef} className={classes.hidden} />
         </div>
 
 
