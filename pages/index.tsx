@@ -84,7 +84,7 @@ const useStyle = createStyles(() => ({
 
 export default function App() {
 
-  const { classes } = useStyle();
+  const { classes } = useStyle()
 
   const [imageData, setImageData] = useState("")
 
@@ -93,88 +93,92 @@ export default function App() {
     contrast: 0
   })
 
-  const canvasRef = useRef(null);
-  const imgRef = useRef(null);
-  const [context, setContext] = useState(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null); //changing back
+  // either way. So we just saying the above one is a <HTMLCanvasElement> thingy not anyother. 
+  // here, instead of <HTMLCanvasElement>, ill use <string>
+  const imgRef = useRef<HTMLImageElement>(null); 
+  const [context, setContext] = useState(null)
 
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null)
 
   function handleFileSelect(e: any) {
-    setFile(e);
+    setFile(e)
   }
 
   // useEffect(() => {
-  //   const canvas = canvasRef.current;
-  //   const ctx = canvas.getContext('2d');
-  //   setContext(ctx);
-  // }, []);
+  //   const canvas = canvasRef.current
+  //   const ctx = canvas.getContext('2d')
+  //   setContext(ctx)
+  // }, [])
 
   // const draw = (ctx: any) => {
-  //   // ctx.fillStyle = "green";
-  //   // ctx.fillRect(10, 10, 150, 100);
+  //   // ctx.fillStyle = "green"
+  //   // ctx.fillRect(10, 10, 150, 100)
   //   ctx.drawImage(imgRef.current, 200, 200)
-  // };
+  // }
 
   // useEffect(() => {
   //   if (context) {
   //     draw(context)
   //   }
-  // }, [context]);
+  // }, [context])
 
 
 
-  // console.log(config);
+  // console.log(config)
 
   function changeConfig(name: string, newValue: number) {
     setConfig(prevConfig => {
       return {
         ...prevConfig,
         [name]: newValue
-      };
-    });
+      }
+    })
   }
 
   // const handleImageChange = (event: any) => {
   //   if (event && imgRef) {
-  //     const fileReader = new FileReader();
+  //     const fileReader = new FileReader()
 
   //     fileReader.onload = (e) => {
-  //       const { result } = e.target;
+  //       const { result } = e.target
   //       console.log(result)
   //       imgRef.current.src = result
   //       // let newImageData = result
   //       setImageData(result)
   //     }
 
-  //     fileReader.readAsDataURL(event);
+  //     fileReader.readAsDataURL(event)
   //   }
-  // };
+  // }
 
   useEffect(() => {
     if (file) {
-      const reader = new FileReader();
-
+      
+      const reader = new FileReader()
+      
       reader.onload = function (e) {
         const img = new Image();
+        img.src = e.target?.result as string; // this... I just moved it up. cause u are rendering a empty image and setting the img src after that.
         img.onload = function () {
-          const canvas = canvasRef.current;
-          const ctx = canvas.getContext("2d");
+          // console.log("here we are.... end of sanity");
+          const canvas = canvasRef.current as HTMLCanvasElement;
+          const ctx = canvas?.getContext("2d");
+          
+          if(!ctx) return;
 
-          // canvas.width = img.width;
-          // canvas.height = img.height;
-
-          // Applying filters
           ctx.filter = `brightness(${(config.brightness+100)}%) contrast(${(config.contrast+100) / 100})`
           // ctx.filter = ``
 
           ctx.drawImage(img, 0, 0);
-          console.log(img)
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+          // console.log(img)
+        }
+
+        if (!img.src) return
+      }
+      reader.readAsDataURL(file)
     }
-  }, [file, config]);
+  }, [file, config])
 
 
   return (
@@ -206,8 +210,8 @@ export default function App() {
             {/* <Button className={classes.button} onChange={() => console.log("change")}>
               Open
             </Button> */}
-            <FileButton className={classes.button} onChange={handleFileSelect} accept="image/png,image/jpeg">
-              {(props) => <Button {...props}>Upload image</Button>}
+            <FileButton onChange={handleFileSelect} accept="image/png,image/jpeg">
+              {(props) => <Button className={classes.button} {...props}>Upload image</Button>}
             </FileButton>
             <Button className={`${classes.button} ${classes.right}`}>
               Save

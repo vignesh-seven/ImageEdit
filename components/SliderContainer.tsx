@@ -25,7 +25,7 @@ const useStyle = createStyles(() => ({
 
 export default function SliderContainer(props: any) {
 
-  const { classes } = useStyle();
+  const { classes } = useStyle()
   return (
     <div className={classes.SliderContainer}>
       <Text fz="md" className={classes.flexChild}>{props.label}</Text>
