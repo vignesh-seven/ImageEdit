@@ -97,7 +97,8 @@ export default function App() {
 
   const [config, setConfig] = useState({
     brightness: 0,
-    contrast: 0
+    contrast: 0,
+    saturation: 0
   })
 
   const canvasRef = useRef<HTMLCanvasElement>(null); //changing back
@@ -178,7 +179,10 @@ export default function App() {
           
           if(!ctx) return;
 
-          ctx.filter = `brightness(${(config.brightness+100)}%) contrast(${(config.contrast+100) / 100})`
+          ctx.filter = `brightness(${(config.brightness+100)/100})
+                        contrast(${(config.contrast+100) / 100})
+                        saturate(${config.saturation + 100}%)`
+
           // ctx.filter = ``
 
           ctx.drawImage(img, 0, 0);
@@ -215,6 +219,7 @@ export default function App() {
           <div className={classes.Settings}>
             <SliderContainer value={config.brightness} changeConfig={changeConfig} name="brightness" label="Brightness" />
             <SliderContainer value={config.contrast} changeConfig={changeConfig} name="contrast" label="Contrast" />
+            <SliderContainer value={config.saturation} changeConfig={changeConfig} name="saturation" label="Saturation" />
           </div>
 
           <div className={classes.BottomButtons}>
