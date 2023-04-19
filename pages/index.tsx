@@ -25,9 +25,16 @@ const useStyle = createStyles(() => ({
     height: "100vh",
   },
   "ImageArea": {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "rgb(14, 14, 70)",
     "p": {
       textAlign: "center"
+    },
+    "canvas": {
+      maxWidth: "90%",
+      maxHeight: "100%",
     }
   },
 
@@ -163,7 +170,11 @@ export default function App() {
         img.onload = function () {
           // console.log("here we are.... end of sanity");
           const canvas = canvasRef.current as HTMLCanvasElement;
-          const ctx = canvas?.getContext("2d");
+
+          canvas.width = img.width;
+          canvas.height = img.height;
+
+          const ctx = canvas.getContext("2d");
           
           if(!ctx) return;
 
@@ -211,7 +222,7 @@ export default function App() {
               Open
             </Button> */}
             <FileButton onChange={handleFileSelect} accept="image/png,image/jpeg">
-              {(props) => <Button className={classes.button} {...props}>Upload image</Button>}
+              {(props) => <Button className={classes.button} {...props}>Open</Button>}
             </FileButton>
             <Button className={`${classes.button} ${classes.right}`}>
               Save

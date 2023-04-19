@@ -11,15 +11,16 @@ const useStyle = createStyles(() => ({
   "Slider": {
     display: "grid", 
     gridAutoColumns: "1fr", 
-    gridTemplateColumns: "1fr 2em 2em", 
+    gridTemplateColumns: "2em 1fr 2em 2em", 
     gridTemplateRows: "1fr", 
-    gap: "0.2em 0.2em", 
+    gap: "0.7em 0.7em", 
     gridTemplateAreas: 
       ". . .", 
     alignItems: "center", 
   },
   "flexChild": {
-    flex: "1"
+    flex: "1",
+    lineHeight: "1em",
   },
 }))
 
@@ -31,7 +32,11 @@ export default function SliderContainer(props: any) {
       <Text fz="md" className={classes.flexChild}>{props.label}</Text>
 
       <div className={classes.Slider}>
-
+      <Button compact 
+          onClick={() => {
+            props.changeConfig(props.name, 0)
+          }}
+          >⟲</Button>
         <Slider 
           min={-100}
           max={100}
