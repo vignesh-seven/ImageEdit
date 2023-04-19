@@ -3,10 +3,8 @@ import { Inter } from '@next/font/google'
 import { useEffect, useRef, useState } from 'react'
 
 import { Button, createStyles, FileButton } from '@mantine/core'
-import { userAgent } from 'next/server'
 import SliderContainer from '../components/SliderContainer'
 
-const inter = Inter({ subsets: ['latin'] })
 
 const useStyle = createStyles(() => ({
   "main": {
@@ -93,47 +91,20 @@ export default function App() {
 
   const { classes } = useStyle()
 
-  const [imageData, setImageData] = useState("")
-
   const [config, setConfig] = useState({
     brightness: 0,
     contrast: 0,
     saturation: 0
   })
 
-  const canvasRef = useRef<HTMLCanvasElement>(null); //changing back
-  // either way. So we just saying the above one is a <HTMLCanvasElement> thingy not anyother. 
-  // here, instead of <HTMLCanvasElement>, ill use <string>
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null); 
-  const [context, setContext] = useState(null)
 
   const [file, setFile] = useState(null)
 
   function handleFileSelect(e: any) {
     setFile(e)
   }
-
-  // useEffect(() => {
-  //   const canvas = canvasRef.current
-  //   const ctx = canvas.getContext('2d')
-  //   setContext(ctx)
-  // }, [])
-
-  // const draw = (ctx: any) => {
-  //   // ctx.fillStyle = "green"
-  //   // ctx.fillRect(10, 10, 150, 100)
-  //   ctx.drawImage(imgRef.current, 200, 200)
-  // }
-
-  // useEffect(() => {
-  //   if (context) {
-  //     draw(context)
-  //   }
-  // }, [context])
-
-
-
-  // console.log(config)
 
   function changeConfig(name: string, newValue: number) {
     setConfig(prevConfig => {
@@ -144,22 +115,6 @@ export default function App() {
     })
   }
 
-  // const handleImageChange = (event: any) => {
-  //   if (event && imgRef) {
-  //     const fileReader = new FileReader()
-
-  //     fileReader.onload = (e) => {
-  //       const { result } = e.target
-  //       console.log(result)
-  //       imgRef.current.src = result
-  //       // let newImageData = result
-  //       setImageData(result)
-  //     }
-
-  //     fileReader.readAsDataURL(event)
-  //   }
-  // }
-
   useEffect(() => {
     if (file) {
       
@@ -167,9 +122,8 @@ export default function App() {
       
       reader.onload = function (e) {
         const img = new Image();
-        img.src = e.target?.result as string; // this... I just moved it up. cause u are rendering a empty image and setting the img src after that.
+        img.src = e.target?.result as string; 
         img.onload = function () {
-          // console.log("here we are.... end of sanity");
           const canvas = canvasRef.current as HTMLCanvasElement;
 
           canvas.width = img.width;
@@ -183,10 +137,7 @@ export default function App() {
                         contrast(${(config.contrast+100) / 100})
                         saturate(${config.saturation + 100}%)`
 
-          // ctx.filter = ``
-
           ctx.drawImage(img, 0, 0);
-          // console.log(img)
         }
 
         if (!img.src) return
@@ -205,7 +156,6 @@ export default function App() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={classes.main}>
-        {/* <Button name="hello" onClick={changeConfig}>Increment Brightness</Button> */}
 
         {/* {CANVAS AREA} */}
         <div className={classes.ImageArea}>
@@ -214,7 +164,6 @@ export default function App() {
         </div>
 
 
-        {/* <SettingsPanel config={config} changeConfig={changeConfig} handleimageFile={(e: File) => { handleimageFile(e) }} /> */}
         <div className={classes.SettingsPanel}>
           <div className={classes.Settings}>
             <SliderContainer value={config.brightness} changeConfig={changeConfig} name="brightness" label="Brightness" />
@@ -223,9 +172,6 @@ export default function App() {
           </div>
 
           <div className={classes.BottomButtons}>
-            {/* <Button className={classes.button} onChange={() => console.log("change")}>
-              Open
-            </Button> */}
             <FileButton onChange={handleFileSelect} accept="image/png,image/jpeg">
               {(props) => <Button className={classes.button} {...props}>Open</Button>}
             </FileButton>
