@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { Inter } from '@next/font/google'
 import { useEffect, useRef, useState } from 'react'
 
 import { Button, createStyles, FileButton } from '@mantine/core'
@@ -31,8 +30,8 @@ const useStyle = createStyles(() => ({
       textAlign: "center"
     },
     "canvas": {
+      maxHeight: "90vh",
       maxWidth: "90%",
-      maxHeight: "100%",
     }
   },
 
