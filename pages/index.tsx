@@ -114,7 +114,7 @@ export default function App() {
     })
   }
 
-  const downloadFile = () => {
+  const saveFile = () => {
     if (!canvasRef.current) return
     canvasRef.current.toBlob((f) => {
       if (!f) return
@@ -186,7 +186,7 @@ export default function App() {
             <FileButton onChange={handleFileSelect} accept="image/png,image/jpeg">
               {(props) => <Button className={classes.button} {...props}>Open</Button>}
             </FileButton>
-            <Button className={`${classes.button} ${classes.right}`} onClick={downloadFile}>
+            <Button className={`${classes.button} ${classes.right}`} onClick={saveFile}>
               Save
             </Button>
             {/* <Button className={`${classes.button} ${classes.right}`}>
