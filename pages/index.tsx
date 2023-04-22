@@ -25,7 +25,7 @@ const useStyle = createStyles(() => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgb(14, 14, 70)",
+    backgroundColor: "#32292F",
     "p": {
       textAlign: "center"
     },
@@ -36,12 +36,13 @@ const useStyle = createStyles(() => ({
   },
 
   "SettingsPanel": {
-    backgroundColor: "brown"
+    backgroundColor: "#283E34"
   },
 
   "Settings": {
     height: "max-content",
-    padding: "1em"
+    padding: "1em",
+    color: "#FAF3DD"
   },
 
 
