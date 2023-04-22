@@ -114,6 +114,18 @@ export default function App() {
     })
   }
 
+  const downloadFile = () => {
+    if (!canvasRef.current) return
+    canvasRef.current.toBlob((f) => {
+      if (!f) return
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(f);
+      link.download = "new_image.jpg";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }, "image/jpeg");
+ };
+
   useEffect(() => {
     if (file) {
       
@@ -174,12 +186,12 @@ export default function App() {
             <FileButton onChange={handleFileSelect} accept="image/png,image/jpeg">
               {(props) => <Button className={classes.button} {...props}>Open</Button>}
             </FileButton>
-            <Button className={`${classes.button} ${classes.right}`}>
+            <Button className={`${classes.button} ${classes.right}`} onClick={downloadFile}>
               Save
             </Button>
-            <Button className={`${classes.button} ${classes.right}`}>
+            {/* <Button className={`${classes.button} ${classes.right}`}>
               Save As
-            </Button>
+            </Button> */}
           </div>
         </div>
       </main>
