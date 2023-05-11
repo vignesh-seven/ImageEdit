@@ -3,8 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Button, createStyles, FileButton } from '@mantine/core'
 import SliderContainer from '../components/SliderContainer'
-import ReactCrop from 'react-image-crop';
-import Cropper from '../components/Cropper'
 
 
 const useStyle = createStyles(() => ({
