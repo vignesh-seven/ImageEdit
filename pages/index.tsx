@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Button, createStyles, FileButton } from '@mantine/core'
 import SliderContainer from '../components/SliderContainer'
+import ReactCrop from 'react-image-crop';
+import Cropper from '../components/Cropper'
 
 
 const useStyle = createStyles(() => ({
@@ -98,9 +100,10 @@ export default function App() {
   })
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null); 
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const [file, setFile] = useState(null)
+
 
   function handleFileSelect(e: any) {
     setFile(e)
@@ -125,16 +128,16 @@ export default function App() {
       link.click();
       URL.revokeObjectURL(link.href);
     }, "image/jpeg");
- };
+  };
 
   useEffect(() => {
     if (file) {
-      
+
       const reader = new FileReader()
-      
+
       reader.onload = function (e) {
         const img = new Image();
-        img.src = e.target?.result as string; 
+        img.src = e.target?.result as string;
         img.onload = function () {
           const canvas = canvasRef.current as HTMLCanvasElement;
 
@@ -142,19 +145,22 @@ export default function App() {
           canvas.height = img.height;
 
           const ctx = canvas.getContext("2d");
-          
-          if(!ctx) return;
 
-          ctx.filter = `brightness(${(config.brightness+100)/100})
-                        contrast(${(config.contrast+100) / 100})
+          if (!ctx) return;
+
+          ctx.filter = `brightness(${(config.brightness + 100) / 100})
+                        contrast(${(config.contrast + 100) / 100})
                         saturate(${config.saturation + 100}%)`
 
           ctx.drawImage(img, 0, 0);
+          console.log(canvas.width, canvas.height)
         }
 
         if (!img.src) return
       }
       reader.readAsDataURL(file)
+
+
     }
   }, [file, config])
 
@@ -169,9 +175,12 @@ export default function App() {
       </Head>
       <main className={classes.main}>
 
+        {/* <Cropper canvasRef={canvasRef.current}/> */}
+
         {/* {CANVAS AREA} */}
         <div className={classes.ImageArea}>
           <canvas ref={canvasRef} width={500} height={500}></canvas>
+
           <img ref={imgRef} className={classes.hidden} />
         </div>
 
