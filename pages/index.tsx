@@ -32,6 +32,7 @@ const useStyle = createStyles(() => ({
     "canvas": {
       maxHeight: "90vh",
       maxWidth: "90%",
+      border: "2px solid blue",
     }
   },
 
@@ -94,13 +95,15 @@ export default function App() {
   const [config, setConfig] = useState({
     brightness: 0,
     contrast: 0,
-    saturation: 0
+    saturation: 0,
+    angle: 0
   })
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null); 
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const [file, setFile] = useState(null)
+
 
   function handleFileSelect(e: any) {
     setFile(e)
@@ -115,6 +118,16 @@ export default function App() {
     })
   }
 
+  function rotateImage() {
+    let newAngle = config.angle
+    if (config.angle == 360) {
+      newAngle = 90
+    } else {
+      newAngle += 90
+    }
+    changeConfig("angle", newAngle)
+  }
+
   const saveFile = () => {
     if (!canvasRef.current) return
     canvasRef.current.toBlob((f) => {
@@ -125,36 +138,65 @@ export default function App() {
       link.click();
       URL.revokeObjectURL(link.href);
     }, "image/jpeg");
- };
+  };
 
   useEffect(() => {
     if (file) {
-      
+
       const reader = new FileReader()
-      
+
       reader.onload = function (e) {
         const img = new Image();
-        img.src = e.target?.result as string; 
+        img.src = e.target?.result as string;
         img.onload = function () {
           const canvas = canvasRef.current as HTMLCanvasElement;
+
+          const ctx = canvas.getContext("2d");
 
           canvas.width = img.width;
           canvas.height = img.height;
 
-          const ctx = canvas.getContext("2d");
-          
-          if(!ctx) return;
+          if (!ctx) return;
 
-          ctx.filter = `brightness(${(config.brightness+100)/100})
-                        contrast(${(config.contrast+100) / 100})
+          if(config.angle != 0) {
+            if (config.angle == 90) {
+              canvas.width = img.height
+              canvas.height = img.width
+
+              ctx.rotate((config.angle * Math.PI) / 180);
+              ctx.translate(0, -canvas.width);
+            }
+
+            if (config.angle == 270) {
+              canvas.width = img.height
+              canvas.height = img.width
+
+              ctx.rotate((config.angle * Math.PI) / 180);
+              ctx.translate(-canvas.height, 0);
+            } 
+
+            if (config.angle == 180) {
+              ctx.rotate((config.angle * Math.PI) / 180);
+              ctx.translate(-canvas.width, -canvas.height);
+            } 
+          }
+          
+
+
+          ctx.filter = `brightness(${(config.brightness + 100) / 100})
+                        contrast(${(config.contrast + 100) / 100})
                         saturate(${config.saturation + 100}%)`
 
           ctx.drawImage(img, 0, 0);
+
+          console.log(config.angle)
         }
 
         if (!img.src) return
       }
       reader.readAsDataURL(file)
+
+
     }
   }, [file, config])
 
@@ -169,9 +211,12 @@ export default function App() {
       </Head>
       <main className={classes.main}>
 
+        {/* <Cropper canvasRef={canvasRef.current}/> */}
+
         {/* {CANVAS AREA} */}
         <div className={classes.ImageArea}>
           <canvas ref={canvasRef} width={500} height={500}></canvas>
+
           <img ref={imgRef} className={classes.hidden} />
         </div>
 
@@ -181,6 +226,7 @@ export default function App() {
             <SliderContainer value={config.brightness} changeConfig={changeConfig} name="brightness" label="Brightness" />
             <SliderContainer value={config.contrast} changeConfig={changeConfig} name="contrast" label="Contrast" />
             <SliderContainer value={config.saturation} changeConfig={changeConfig} name="saturation" label="Saturation" />
+            <Button onClick={rotateImage}>Rotate</Button>
           </div>
 
           <div className={classes.BottomButtons}>
