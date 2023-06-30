@@ -140,14 +140,19 @@ export default function App() {
     }, "image/jpeg");
   };
 
+  console.log("hey", canvasRef)
+
   useEffect(() => {
     if (file) {
+      console.log("hey2", canvasRef)
 
       const reader = new FileReader()
 
       reader.onload = function (e) {
         const img = new Image();
         img.src = e.target?.result as string;
+
+
         img.onload = function () {
           const canvas = canvasRef.current as HTMLCanvasElement;
 
@@ -158,7 +163,7 @@ export default function App() {
 
           if (!ctx) return;
 
-          if(config.angle != 0) {
+          if (config.angle != 0) {
             if (config.angle == 90) {
               canvas.width = img.height
               canvas.height = img.width
@@ -173,14 +178,14 @@ export default function App() {
 
               ctx.rotate((config.angle * Math.PI) / 180);
               ctx.translate(-canvas.height, 0);
-            } 
+            }
 
             if (config.angle == 180) {
               ctx.rotate((config.angle * Math.PI) / 180);
               ctx.translate(-canvas.width, -canvas.height);
-            } 
+            }
           }
-          
+
 
 
           ctx.filter = `brightness(${(config.brightness + 100) / 100})
@@ -200,7 +205,19 @@ export default function App() {
     }
   }, [file, config])
 
+  let isImageEmpty = !file ? true : false
 
+  let imageArea = (
+    <div className={classes.ImageArea}>
+      { // display text instead of a canvas if there's no image
+        isImageEmpty ?
+          (<><h2>No file selected!<br />Click "Open" to load an image!</h2></>)
+          :
+          (<canvas ref={canvasRef} width={500} height={500}></canvas>)}
+
+      <img ref={imgRef} className={classes.hidden} />
+    </div>
+  )
   return (
     <>
       <Head>
@@ -214,19 +231,15 @@ export default function App() {
         {/* <Cropper canvasRef={canvasRef.current}/> */}
 
         {/* {CANVAS AREA} */}
-        <div className={classes.ImageArea}>
-          <canvas ref={canvasRef} width={500} height={500}></canvas>
 
-          <img ref={imgRef} className={classes.hidden} />
-        </div>
-
+        {imageArea}
 
         <div className={classes.SettingsPanel}>
           <div className={classes.Settings}>
-            <SliderContainer value={config.brightness} changeConfig={changeConfig} name="brightness" label="Brightness" />
-            <SliderContainer value={config.contrast} changeConfig={changeConfig} name="contrast" label="Contrast" />
-            <SliderContainer value={config.saturation} changeConfig={changeConfig} name="saturation" label="Saturation" />
-            <Button onClick={rotateImage}>Rotate</Button>
+            <SliderContainer value={config.brightness} changeConfig={changeConfig} name="brightness" label="Brightness" isImageEmpty={isImageEmpty} />
+            <SliderContainer value={config.contrast} changeConfig={changeConfig} name="contrast" label="Contrast" isImageEmpty={isImageEmpty} />
+            <SliderContainer value={config.saturation} changeConfig={changeConfig} name="saturation" label="Saturation" isImageEmpty={isImageEmpty} />
+            <Button disabled={isImageEmpty} onClick={rotateImage}>Rotate</Button>
           </div>
 
           <div className={classes.BottomButtons}>

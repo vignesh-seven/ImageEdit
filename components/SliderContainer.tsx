@@ -33,11 +33,13 @@ export default function SliderContainer(props: any) {
 
       <div className={classes.Slider}>
       <Button compact 
+          disabled={props.isImageEmpty}
           onClick={() => {
             props.changeConfig(props.name, 0)
           }}
           >⟲</Button>
         <Slider 
+          disabled={props.isImageEmpty}
           min={-100}
           max={100}
           label={(value) => value.toFixed(1)}
@@ -50,11 +52,13 @@ export default function SliderContainer(props: any) {
           value={props.value}
         />
         <Button compact 
+          disabled={props.isImageEmpty}
           onClick={() => {
             props.changeConfig(props.name, props.value + 1)
           }}
           >+</Button>
         <Button compact 
+          disabled={props.isImageEmpty}
           onClick={() => {
             props.changeConfig(props.name, props.value - 1)
           }}
