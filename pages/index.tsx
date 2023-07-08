@@ -96,7 +96,11 @@ export default function App() {
     brightness: 0,
     contrast: 0,
     saturation: 0,
-    angle: 0
+    angle: 0,
+    flip: {
+      x: false,
+      y: false
+    }
   })
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -140,11 +144,11 @@ export default function App() {
     }, "image/jpeg");
   };
 
-  console.log("hey", canvasRef)
+  // console.log("hey", canvasRef)
 
   useEffect(() => {
     if (file) {
-      console.log("hey2", canvasRef)
+      // console.log("hey2", canvasRef)
 
       const reader = new FileReader()
 
@@ -162,39 +166,44 @@ export default function App() {
           canvas.height = img.height;
 
           if (!ctx) return;
-
+          
+          // ctx.scale(config.flipH, config.flipV)
+          
           if (config.angle != 0) {
             if (config.angle == 90) {
               canvas.width = img.height
               canvas.height = img.width
-
+              
               ctx.rotate((config.angle * Math.PI) / 180);
               ctx.translate(0, -canvas.width);
             }
-
+            
             if (config.angle == 270) {
               canvas.width = img.height
               canvas.height = img.width
-
+              
               ctx.rotate((config.angle * Math.PI) / 180);
               ctx.translate(-canvas.height, 0);
             }
-
+            
             if (config.angle == 180) {
               ctx.rotate((config.angle * Math.PI) / 180);
               ctx.translate(-canvas.width, -canvas.height);
             }
           }
-
-
-
+          
+          
           ctx.filter = `brightness(${(config.brightness + 100) / 100})
-                        contrast(${(config.contrast + 100) / 100})
-                        saturate(${config.saturation + 100}%)`
+          contrast(${(config.contrast + 100) / 100})
+          saturate(${config.saturation + 100}%)`
+          
+          
+          ctx.drawImage(img, 0, 0, img.width, img.height);
+        
+          ctx.scale((config.flip.x ? -1 : 1), (config.flip.y ? -1 : 1))  // set scale to -1 if flip values are true
+          ctx.drawImage(img, 0, 0, (config.flip.x ? -1 : 1) * img.width, (config.flip.y ? -1 : 1) * img.height);
 
-          ctx.drawImage(img, 0, 0);
-
-          console.log(config.angle)
+          // console.log(config.angle)
         }
 
         if (!img.src) return
@@ -218,6 +227,11 @@ export default function App() {
       <img ref={imgRef} className={classes.hidden} />
     </div>
   )
+  // function flipImageHorizontal(ctx: CanvasRenderingContext2D) {
+  //   ctx.save()
+
+  // }
+
   return (
     <>
       <Head>
@@ -239,7 +253,8 @@ export default function App() {
             <SliderContainer value={config.brightness} changeConfig={changeConfig} name="brightness" label="Brightness" isImageEmpty={isImageEmpty} />
             <SliderContainer value={config.contrast} changeConfig={changeConfig} name="contrast" label="Contrast" isImageEmpty={isImageEmpty} />
             <SliderContainer value={config.saturation} changeConfig={changeConfig} name="saturation" label="Saturation" isImageEmpty={isImageEmpty} />
-            <Button disabled={isImageEmpty} onClick={rotateImage}>Rotate</Button>
+            <Button disabled={isImageEmpty} onClick={rotateImage}>Rotate ⟳</Button>
+            <Button disabled={isImageEmpty} onClick={() => {}}>Flip H</Button>
           </div>
 
           <div className={classes.BottomButtons}>
