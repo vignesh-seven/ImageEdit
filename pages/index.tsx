@@ -97,10 +97,8 @@ export default function App() {
     contrast: 0,
     saturation: 0,
     angle: 0,
-    flip: {
-      x: false,
-      y: false
-    }
+    flipX: 1,
+    flipY: 1
   })
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -113,7 +111,7 @@ export default function App() {
     setFile(e)
   }
 
-  function changeConfig(name: string, newValue: number) {
+  function changeConfig(name: string, newValue: any) {
     setConfig(prevConfig => {
       return {
         ...prevConfig,
@@ -200,8 +198,8 @@ export default function App() {
           
           ctx.drawImage(img, 0, 0, img.width, img.height);
         
-          ctx.scale((config.flip.x ? -1 : 1), (config.flip.y ? -1 : 1))  // set scale to -1 if flip values are true
-          ctx.drawImage(img, 0, 0, (config.flip.x ? -1 : 1) * img.width, (config.flip.y ? -1 : 1) * img.height);
+          ctx.scale(config.flipX, config.flipY)  // set scale values according to flip values
+          ctx.drawImage(img, 0, 0, (config.flipX * img.width), (config.flipY * img.height));
 
           // console.log(config.angle)
         }
@@ -227,10 +225,12 @@ export default function App() {
       <img ref={imgRef} className={classes.hidden} />
     </div>
   )
-  // function flipImageHorizontal(ctx: CanvasRenderingContext2D) {
-  //   ctx.save()
-
-  // }
+  function flipImageHorizontal() {
+    changeConfig("flipX", config.flipX  == 1 ? -1 : 1)
+  }
+  function flipImageVertical() {
+    changeConfig("flipY", config.flipY  == 1 ? -1 : 1)
+  }
 
   return (
     <>
@@ -254,7 +254,8 @@ export default function App() {
             <SliderContainer value={config.contrast} changeConfig={changeConfig} name="contrast" label="Contrast" isImageEmpty={isImageEmpty} />
             <SliderContainer value={config.saturation} changeConfig={changeConfig} name="saturation" label="Saturation" isImageEmpty={isImageEmpty} />
             <Button disabled={isImageEmpty} onClick={rotateImage}>Rotate ⟳</Button>
-            <Button disabled={isImageEmpty} onClick={() => {}}>Flip H</Button>
+            <Button disabled={isImageEmpty} onClick={flipImageHorizontal}>Flip H</Button>
+            <Button disabled={isImageEmpty} onClick={flipImageVertical}>Flip V</Button>
           </div>
 
           <div className={classes.BottomButtons}>
