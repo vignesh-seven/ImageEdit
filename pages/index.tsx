@@ -218,7 +218,7 @@ export default function App() {
     <div className={classes.ImageArea}>
       { // display text instead of a canvas if there's no image
         isImageEmpty ?
-          (<><h2>No file selected!<br />Click "Open" to load an image!</h2></>)
+          (<><h2>No file selected!<br />Click &quot;Open&quot; to load an image!</h2></>)
           :
           (<canvas ref={canvasRef} width={500} height={500}></canvas>)}
 
