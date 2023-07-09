@@ -25,7 +25,8 @@ const useStyle = createStyles(() => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#32292F",
+    backgroundColor: "#222527",
+    color: "white",
     "p": {
       textAlign: "center"
     },
